@@ -12,7 +12,7 @@ def index():
 
 @app.route('/api/a')
 def index1():
-    result = ssh.dfh()
+    result = ssh.getAllPod()
     return result
 
 
