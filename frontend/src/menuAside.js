@@ -30,9 +30,34 @@ export default [
   //   icon: mdiSquareEditOutline,
   // },
   {
-    to: "/namespaces",
-    label: "Forms",
+    to: "/cluster",
+    label: "Cluster",
     icon: mdiSquareEditOutline,
+  },
+  {
+    to: "/namespace",
+    label: "Namespace",
+    icon: mdiSquareEditOutline,
+  },
+  {
+    label: "Workload",
+    icon: mdiViewList,
+    menu: [
+      {
+        label: "Pods",
+        to: "/pods",
+        icon: mdiSquareEditOutline,
+      },
+      {
+        label: "Statefulsets",
+      },
+      {
+        label: "Secrets",
+      },
+      {
+        label: "ConfigMaps",
+      },
+    ],
   },
   {
     to: "/ui",

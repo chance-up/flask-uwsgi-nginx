@@ -15,6 +15,7 @@ const emit = defineEmits(["menu-click", "aside-lg-close-click"]);
 
 const menuClick = (event, item) => {
   emit("menu-click", event, item);
+  console.log("00");
 };
 
 const asideLgCloseClick = (event) => {
@@ -30,7 +31,6 @@ const asideLgCloseClick = (event) => {
       { 'lg:hidden xl:flex': !isAsideLgActive },
     ]"
     @menu-click="menuClick"
-    @aside-lg-close-click="asideLgCloseClick"
   />
   <OverlayLayer
     v-show="isAsideLgActive"

@@ -36,9 +36,10 @@ const componentClass = computed(() => [
 
 const hasDropdown = computed(() => !!props.item.menu);
 
-const menuClick = (event) => {
+const menuClick = (event, item) => {
   emit("menu-click", event, props.item);
-
+  console.log(33, item);
+  console.log(isDropdownActive.value);
   if (hasDropdown.value) {
     isDropdownActive.value = !isDropdownActive.value;
   }

@@ -26,10 +26,7 @@ const logoutItem = computed(() => ({
 
 const menuClick = (event, item) => {
   emit("menu-click", event, item);
-};
-
-const asideLgCloseClick = (event) => {
-  emit("aside-lg-close-click", event);
+  console.log(11);
 };
 </script>
 
@@ -51,12 +48,6 @@ const asideLgCloseClick = (event) => {
         >
           <b class="font-black">EKS UI</b>
         </div>
-        <button
-          class="hidden lg:inline-block xl:hidden p-3"
-          @click.prevent="asideLgCloseClick"
-        >
-          <BaseIcon :path="mdiClose" />
-        </button>
       </div>
       <div
         :class="

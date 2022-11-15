@@ -1,34 +1,13 @@
 from flask import Flask
 from flask_cors import CORS
 from flask import Flask, jsonify, request
-from app import ssh
+from app.views import namespace_view, temp_view
+
 
 app = Flask(__name__)
 CORS(app, resources={r'/*': {'origins': '*'}})
+app.register_blueprint(namespace_view.bp)
+# app.register_blueprint(temp_view.bp)
+
+
   
-@app.route('/api')
-def index():
-    return "Hello World!"
-
-@app.route('/api/a')
-def index1():
-    result = ssh.getAllPod()
-    return result
-
-
-@app.route('/api/ab')
-def index2():
-    return "Hello World ab!"
-
-
-
-# from flask import Flask
-
-# def create_app():
-#     app = Flask(__name__)
-
-#     @app.route('/')
-#     def hello_pybo():
-#         return 'Hello, Pybo!'
-
-#     return app

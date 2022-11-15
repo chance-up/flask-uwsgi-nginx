@@ -38,10 +38,8 @@ const menuClick = (event, item) => {
   if (item.isToggleLightDark) {
     styleStore.setDarkMode();
   }
-
-  if (item.isLogout) {
-    //
-  }
+  console.log(item);
+  console.log(event);
 };
 </script>
 

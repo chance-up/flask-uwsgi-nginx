@@ -1,77 +1,3 @@
-<script setup>
-import { computed, ref } from "vue";
-import { useMainStore } from "@/stores/main";
-import { mdiEye, mdiTrashCan } from "@mdi/js";
-import CardBoxModal from "@/components/CardBoxModal.vue";
-import TableCheckboxCell from "@/components/TableCheckboxCell.vue";
-import BaseLevel from "@/components/BaseLevel.vue";
-import BaseButtons from "@/components/BaseButtons.vue";
-import BaseButton from "@/components/BaseButton.vue";
-import UserAvatar from "@/components/UserAvatar.vue";
-
-defineProps({
-  checkable: Boolean,
-});
-
-const mainStore = useMainStore();
-
-const items = computed(() => mainStore.clients);
-
-const isModalActive = ref(false);
-
-const isModalDangerActive = ref(false);
-
-const perPage = ref(5);
-
-const currentPage = ref(0);
-
-const checkedRows = ref([]);
-
-const itemsPaginated = computed(() =>
-  items.value.slice(
-    perPage.value * currentPage.value,
-    perPage.value * (currentPage.value + 1)
-  )
-);
-
-const numPages = computed(() => Math.ceil(items.value.length / perPage.value));
-
-const currentPageHuman = computed(() => currentPage.value + 1);
-
-const pagesList = computed(() => {
-  const pagesList = [];
-
-  for (let i = 0; i < numPages.value; i++) {
-    pagesList.push(i);
-  }
-
-  return pagesList;
-});
-
-const remove = (arr, cb) => {
-  const newArr = [];
-
-  arr.forEach((item) => {
-    if (!cb(item)) {
-      newArr.push(item);
-    }
-  });
-
-  return newArr;
-};
-
-const checked = (isChecked, client) => {
-  if (isChecked) {
-    checkedRows.value.push(client);
-  } else {
-    checkedRows.value = remove(
-      checkedRows.value,
-      (row) => row.id === client.id
-    );
-  }
-};
-</script>
-
 <template>
   <CardBoxModal v-model="isModalActive" title="Sample modal">
     <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
@@ -102,52 +28,28 @@ const checked = (isChecked, client) => {
     <thead>
       <tr>
         <th v-if="checkable" />
-        <th />
-        <th>Name</th>
-        <th>Company</th>
-        <th>City</th>
-        <th>Progress</th>
-        <th>Created</th>
+        <th>Namespace</th>
+        <th>Status</th>
+        <th>Age</th>
         <th />
       </tr>
     </thead>
     <tbody>
-      <tr v-for="client in itemsPaginated" :key="client.id">
+      <tr v-for="(ns, idx) in itemsPaginated" :key="idx">
         <TableCheckboxCell
           v-if="checkable"
           @checked="checked($event, client)"
         />
-        <td class="border-b-0 lg:w-6 before:hidden">
-          <UserAvatar
-            :username="client.name"
-            class="w-24 h-24 mx-auto lg:w-6 lg:h-6"
-          />
+        <td data-label="Namespace">
+          {{ ns.ns }}
         </td>
-        <td data-label="Name">
-          {{ client.name }}
+        <td data-label="Status">
+          {{ ns.status }}
         </td>
-        <td data-label="Company">
-          {{ client.company }}
+        <td data-label="Age">
+          {{ ns.age }}
         </td>
-        <td data-label="City">
-          {{ client.city }}
-        </td>
-        <td data-label="Progress" class="lg:w-32">
-          <progress
-            class="flex w-2/5 self-center lg:w-full"
-            max="100"
-            :value="client.progress"
-          >
-            {{ client.progress }}
-          </progress>
-        </td>
-        <td data-label="Created" class="lg:w-1 whitespace-nowrap">
-          <small
-            class="text-gray-500 dark:text-slate-400"
-            :title="client.created"
-            >{{ client.created }}</small
-          >
-        </td>
+
         <td class="before:hidden lg:w-1 whitespace-nowrap">
           <BaseButtons type="justify-start lg:justify-end" no-wrap>
             <BaseButton
@@ -184,3 +86,79 @@ const checked = (isChecked, client) => {
     </BaseLevel>
   </div>
 </template>
+
+<script setup>
+import { computed, ref, watch } from "vue";
+import { mdiEye, mdiTrashCan } from "@mdi/js";
+import CardBoxModal from "@/components/CardBoxModal.vue";
+import TableCheckboxCell from "@/components/TableCheckboxCell.vue";
+import BaseLevel from "@/components/BaseLevel.vue";
+import BaseButtons from "@/components/BaseButtons.vue";
+import BaseButton from "@/components/BaseButton.vue";
+
+const PER_PAGE = 10;
+const DEFAULT_PAGE = 0;
+
+const props = defineProps({
+  checkable: Boolean,
+  namespaces: {
+    type: Array,
+    required: false,
+  },
+});
+
+const items = ref([]);
+watch(
+  () => props.namespaces,
+  (val) => {
+    items.value = val;
+    console.log("watch!!", items.value);
+  }
+);
+
+const isModalActive = ref(false);
+const isModalDangerActive = ref(false);
+const perPage = ref(PER_PAGE);
+const currentPage = ref(DEFAULT_PAGE);
+const checkedRows = ref([]);
+
+const itemsPaginated = computed(() =>
+  items.value.slice(
+    perPage.value * currentPage.value,
+    perPage.value * (currentPage.value + 1)
+  )
+);
+
+const numPages = computed(() => Math.ceil(items.value.length / perPage.value));
+const currentPageHuman = computed(() => currentPage.value + 1);
+
+const pagesList = computed(() => {
+  const pagesList = [];
+  for (let i = 0; i < numPages.value; i++) {
+    pagesList.push(i);
+  }
+  return pagesList;
+});
+
+const remove = (arr, cb) => {
+  const newArr = [];
+  arr.forEach((item) => {
+    if (!cb(item)) {
+      newArr.push(item);
+    }
+  });
+
+  return newArr;
+};
+
+const checked = (isChecked, client) => {
+  if (isChecked) {
+    checkedRows.value.push(client);
+  } else {
+    checkedRows.value = remove(
+      checkedRows.value,
+      (row) => row.id === client.id
+    );
+  }
+};
+</script>

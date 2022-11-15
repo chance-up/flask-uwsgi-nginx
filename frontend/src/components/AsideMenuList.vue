@@ -13,6 +13,7 @@ const emit = defineEmits(["menu-click"]);
 
 const menuClick = (event, item) => {
   emit("menu-click", event, item);
+  console.log(22, item);
 };
 </script>
 

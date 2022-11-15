@@ -38,9 +38,6 @@ const fillChartData = () => {
 
 onMounted(() => {
   fillChartData();
-  podRepository.getAllPod().then((res) => {
-    console.log(res);
-  });
 });
 
 const mainStore = useMainStore();
@@ -62,12 +59,12 @@ const transactionBarItems = computed(() => mainStore.history);
 
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
         <CardBoxWidget
-          trend="12%"
+          trend="healthy"
           trend-type="up"
           color="text-emerald-500"
           :icon="mdiAccountMultiple"
           :number="512"
-          label="Clients"
+          label="Cluster"
         />
         <CardBoxWidget
           trend="12%"
@@ -76,7 +73,7 @@ const transactionBarItems = computed(() => mainStore.history);
           :icon="mdiCartOutline"
           :number="7770"
           prefix="$"
-          label="Sales"
+          label="Namespace"
         />
         <CardBoxWidget
           trend="Overflow"

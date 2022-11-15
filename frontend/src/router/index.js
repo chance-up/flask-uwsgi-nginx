@@ -1,19 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Style from "@/views/StyleView.vue";
 import Home from "@/views/HomeView.vue";
 
 const routes = [
-  // {
-  //   meta: {
-  //     title: "Select style",
-  //   },
-  //   path: "/",
-  //   name: "style",
-  //   component: Style,
-  // },
   {
-    // Document title tag
-    // We combine it with defaultDocumentTitle set in `src/main.js` on router.afterEach hook
     meta: {
       title: "Dashboard",
     },
@@ -21,6 +10,31 @@ const routes = [
     name: "dashboard",
     component: Home,
   },
+  {
+    meta: {
+      title: "Cluster",
+    },
+    path: "/cluster",
+    name: "cluster",
+    component: () => import("@/views/ClusterView.vue"),
+  },
+  {
+    meta: {
+      title: "Namespaces",
+    },
+    path: "/namespace",
+    name: "namespace",
+    component: () => import("@/views/NamespaceView.vue"),
+  },
+  {
+    meta: {
+      title: "Pods",
+    },
+    path: "/pods",
+    name: "pods",
+    component: () => import("@/views/PodsView.vue"),
+  },
+
   {
     meta: {
       title: "Tables",

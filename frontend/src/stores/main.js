@@ -35,6 +35,7 @@ export const useMainStore = defineStore("main", {
           if (r.data && r.data.data) {
             this[sampleDataKey] = r.data.data;
           }
+          console.log("!!!");
         })
         .catch((error) => {
           alert(error.message);
