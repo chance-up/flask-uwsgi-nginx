@@ -1,20 +1,3 @@
-<script setup>
-import {
-  mdiMonitorCellphone,
-  mdiTableBorder,
-  mdiTableOff,
-  mdiGithub,
-} from "@mdi/js";
-import SectionMain from "@/components/SectionMain.vue";
-import NotificationBar from "@/components/NotificationBar.vue";
-import TableSampleClients from "@/components/TableSampleClients.vue";
-import CardBox from "@/components/CardBox.vue";
-import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
-import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.vue";
-import BaseButton from "@/components/BaseButton.vue";
-import CardBoxComponentEmpty from "@/components/CardBoxComponentEmpty.vue";
-</script>
-
 <template>
   <LayoutAuthenticated>
     <SectionMain>
@@ -25,18 +8,38 @@ import CardBoxComponentEmpty from "@/components/CardBoxComponentEmpty.vue";
       </NotificationBar> -->
 
       <CardBox class="mb-6" has-table>
-        <TableSampleClients checkable />
+        <TableCluster :clusters="clusters" checkable />
       </CardBox>
-
-      <!-- <SectionTitleLineWithButton :icon="mdiTableOff" title="Empty variation" /> -->
-
-      <!-- <NotificationBar color="danger" :icon="mdiTableOff">
-        <b>Empty table.</b> When there's nothing to show
-      </NotificationBar> -->
-
-      <!-- <CardBox>
-        <CardBoxComponentEmpty />
-      </CardBox> -->
     </SectionMain>
   </LayoutAuthenticated>
 </template>
+
+<script setup>
+import {
+  mdiMonitorCellphone,
+  mdiTableBorder,
+  mdiTableOff,
+  mdiGithub,
+} from "@mdi/js";
+import SectionMain from "@/components/SectionMain.vue";
+import NotificationBar from "@/components/NotificationBar.vue";
+import TableCluster from "@/components/TableCluster.vue";
+import CardBox from "@/components/CardBox.vue";
+import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
+import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.vue";
+import Repo from "@/repository/resourceRepository";
+import { onMounted, ref } from "vue";
+
+const repo = new Repo();
+const clusters = ref();
+const getClusterInfo = async () => {
+  repo.getClusterInfo().then((res) => {
+    clusters.value = res.data;
+    console.log(clusters.value);
+  });
+};
+
+onMounted(() => {
+  getClusterInfo();
+});
+</script>

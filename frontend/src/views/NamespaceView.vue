@@ -25,19 +25,19 @@ import TableSampleClients from "@/components/TableSampleClients.vue";
 import CardBox from "@/components/CardBox.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.vue";
-import NamespaceRepository from "@/repository/namespaceRepository";
+import Repo from "@/repository/resourceRepository";
 import { onMounted, ref } from "vue";
 
-const namespaceRepository = new NamespaceRepository();
+const repo = new Repo();
 const namespaces = ref();
 const getAll = async () => {
-  namespaceRepository.getAll().then((res) => {
+  repo.getAll().then((res) => {
     namespaces.value = res.data;
     console.log(namespaces.value);
   });
 };
 
 onMounted(() => {
-  // getAll();
+  getAll();
 });
 </script>

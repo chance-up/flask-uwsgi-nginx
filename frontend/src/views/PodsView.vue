@@ -21,7 +21,7 @@ import TableSampleClients from "@/components/TableSampleClients.vue";
 import CardBox from "@/components/CardBox.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.vue";
-import NamespaceRepository from "@/repository/namespaceRepository";
+import NamespaceRepository from "@/repository/resourceRepository";
 import { onMounted, ref } from "vue";
 
 const namespaceRepository = new NamespaceRepository();
